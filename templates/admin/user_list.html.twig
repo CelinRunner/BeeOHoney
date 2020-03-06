@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{%  block content %}
+
+    <h1>Gestion des membres</h1>
+    <a href="{{ path('admin_user_add') }}" class="btn btn-info">Ajouter un membre</a>
+    <br>
+    <div class="row">
+        <table class="table table-bordered table-responsive-sm">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Prénom</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Anniversaire</th>
+                <th scope="col">Sexe</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Code Postale</th>
+                <th scope="col">Ville</th>
+                <th scope="col">Téléphone</th>
+                <th scope="col" colspan="3">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for u in users %}
+                <tr>
+                    <th scope="row">{{ u.id }}</th>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.firstname }}</td>
+                    <td>{{ u.lastname }}</td>
+                    <td>{{ u.birthday|date("d-m-Y")}}</td>
+                    <td>{{ u.sexe}}</td>
+                    <td>{{ u.adress }}</td>
+                    <td>{{ u.zipcode }}</td>
+                    <td>{{ u.city }}</td>
+                    <td>{{ u.telephone }}</td>
+{#                    <td><a href="{{ path('admin_product_update', {id: p.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>#}
+{#                    <td><a href="{{ path('admin_product_delete', {id: p.id}) }}"><i class="fas fa-trash-alt"></i></a></td>#}
+
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

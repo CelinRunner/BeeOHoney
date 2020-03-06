@@ -1,0 +1,9 @@
+.checkbox-column-container{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: start;
+}
+
+.checkbox-column-container > .form-check{
+    width: 25%;
+}

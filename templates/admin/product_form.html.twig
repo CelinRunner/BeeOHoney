@@ -1,0 +1,74 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>{{ form_title }}</h1>
+
+    {% if product is defined %}
+        <img src="{{ asset('photos/' ~ product.image) }}" alt="" class="img-thumbnail">
+    {% endif %}
+
+    {{ form_start(form) }}
+    {{ form_row(form.title, {
+        label: "Titre"
+    }) }}
+
+    {{ form_row(form.description, {
+        label: "Description"
+    }) }}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                {{ form_row(form.stock, {
+                    label: "Stock"
+                }) }}
+            </div>
+
+            <div class="col-sm">
+                {{ form_row(form.price, {
+                    label: "Prix"
+                }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                {{ form_row(form.imageUpload, {
+                    label: "Image"
+                }) }}
+            </div>
+
+            <div class="col-sm">
+                {{ form_row(form.weigth, {
+                    label: "Poids"
+                }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm">
+                {{ form_row(form.flavour, {
+                    label: "Saveur/Goût"
+                }) }}
+            </div>
+
+            <div class="col-sm">
+                {{ form_row(form.brand, {
+                    label: "Marque"
+                }) }}
+            </div>
+        </div>
+    </div>
+
+    {{ form_row(form.categories, {
+        label: "Catégories",
+        attr: {
+            class: "checkbox-column-container"
+        }
+    }) }}
+
+    <button type="submit" class="btn btn-success btn-block">
+        Enregistrer
+    </button>
+    {{ form_end(form) }}
+{% endblock %}

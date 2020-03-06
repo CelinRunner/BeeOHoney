@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+    <div class="row">
+
+
+
+        <!-- Post Content Column -->
+        <div class="col-lg-8">
+
+            <!-- Title -->
+            <h1 class="mt-4">{{ product.title }}</h1>
+
+            <!-- Author -->
+            <p class="lead">
+
+                <a href="#">{{ product.brand }}</a>
+            </p>
+
+
+            <!-- Date/Time -->
+            <div class="card-footer">
+                <small class="text-muted">★ ★ ★ ★ ☆</small>
+            </div>
+
+
+            <!-- Preview Image -->
+            <div style="display: flex; justify-content: center; align-items: center; overflow: hidden">
+                <img class="img-fluid rounded" src="{{ asset('photos/' ~ product.image) }}" alt="" >
+            </div>
+            <hr>
+
+            <!-- Post Content -->
+            <p class="lead">
+                {{ product.description | raw }}
+            </p>
+
+{#            {% if produit.stock >= 10 %}#}
+{#                <p class="text-success">Disponible</p>#}
+{#            {% elseif produit.stock > 1 %}#}
+{#                <p class="text-warning">{{ produit.stock }} produits disponible</p>#}
+{#            {% elseif p.stock > 0 %}#}
+{#                <p class="text-warning">{{ produit.stock }} produit disponible</p>#}
+{#            {% else %}#}
+{#                <p class="text-danger">Rupture de stock</p>#}
+{#            {% endif %}#}
+
+            <!-- Comments Form -->
+            <div class="card my-4">
+                <h5 class="card-header">Laisser un commentaire</h5>
+                <div class="card-body">
+                    <form>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Single Comment -->
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0">Commenter Name</h5>
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                </div>
+            </div>
+
+            <!-- Comment with nested comments -->
+            <div class="media mb-4">
+                <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                <div class="media-body">
+                    <h5 class="mt-0">Commenter Name</h5>
+                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+
+                    <div class="media mt-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0">Commenter Name</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </div>
+
+                    <div class="media mt-4">
+                        <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
+                        <div class="media-body">
+                            <h5 class="mt-0">Commenter Name</h5>
+                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Search Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Acheter ce produit</h5>
+                <div class="card-body">
+
+                    <form method="post" action="{{ path('cart_add', {'id' : product.id}) }}">
+                        <div class="input-group">
+                            <select name="qty" class="form-control">
+                                {% for i in 1..min(15, product.stock) %}
+                                    <option>{{ i }}</option>
+                                {% endfor %}
+                            </select>
+                            <span class="input-group-btn">
+                                <button class="btn btn-secondary" type="submit">Ajouter au panier</button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Categories Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Categories &amp; Mots Clefs</h5>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+
+                            {% for c in product.categories %}
+                                <li>
+                                    <a href="{{ path ('category', {'slug' : c.slug}) }}">{{ c.title }}</a>
+                                </li>
+                            {% endfor %}
+
+                            </ul>
+                        </div>
+                        <div class="col-lg-6">
+                            <ul class="list-unstyled mb-0">
+                            {% for c in product.categories %}
+                            {% set tab = c.keywords|split(', ') %}
+                                {% for kw in tab %}
+                                <li>
+                                    <a href="{{ path('recherche') }}?s={{ kw }}">{{ kw }}</a>
+                                </li>
+                                {% endfor %}
+                            {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Widget -->
+            <div class="card my-4">
+                <h5 class="card-header">Side Widget</h5>
+                <div class="card-body">
+                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+{% endblock  %}

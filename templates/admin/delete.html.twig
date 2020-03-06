@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+    <h1>{{ title }}</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.confirmation, {
+            label: form_label
+        }) }}
+
+    <button type="submit" class="btn btn-danger">
+        Supprimer
+    </button>
+
+    <a href="{{ path(cancel_route) }}" class="btn btn-info">
+        Annuler
+    </a>
+
+    {{ form_end (form) }}
+
+{% endblock %}

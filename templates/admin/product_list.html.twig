@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{%  block content %}
+
+    <h1>Gestion des produits</h1>
+    <a href="{{ path('admin_product_add') }}" class="btn btn-info">Ajouter un produit</a>
+    <br>
+    <div class="row">
+        <table class="table table-bordered table-responsive-sm">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Description</th>
+                <th scope="col">Stock</th>
+                <th scope="col">Prix</th>
+                <th scope="col">Image</th>
+                <th scope="col">Poids</th>
+                <th scope="col">Goût</th>
+                <th scope="col">brand</th>
+                <th scope="col" colspan="3">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for p in products %}
+                <tr>
+                    <th scope="row">{{ p.id }}</th>
+                    <td>{{ p.title }}</td>
+                    <td>{{ p.description|slice(0, 20) }}... }}</td>
+                    <td>{{ p.stock }}</td>
+                    <td>{{ p.price ~ " €"}}</td>
+                    <td><img src="{{ asset('/photos/' ~ p.image) }}" height="80px" width="80px" style="margin-right: 30px"></td>
+                    <td>{{ p.weigth }}</td>
+                    <td>{{ p.flavour }}</td>
+                    <td>{{ p.brand }}</td>
+                    <td><a href="{{ path('admin_product_update', {id: p.id}) }}"><i class="fas fa-pencil-alt"></i></a></td>
+                    <td><a href="{{ path('admin_product_delete', {id: p.id}) }}"><i class="fas fa-trash-alt"></i></a></td>
+
+                </tr>
+
+            {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+
+{% endblock %}

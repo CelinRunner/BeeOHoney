@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+
+<div class="row">
+
+    <table class="table tablestriped table-dark">
+
+        <thead>
+            <tr>
+                <th colspan="6">Panier</th>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <th>Tire</th>
+                <th>Prix unitaire</th>
+                <th>Quantité</th>
+                <th>Prix total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set totalPanier = 0 %}
+            {% for key, item in app.session.get('panier') %}
+            <tr>
+                <td><img src="{{  asset('photos/' ~ item.product.image) }}" height="50px"></td>
+                <td>{{ item.product.title }}</td>
+                <td>{{ item.product.price | number_format(2, ',', ' ') }}€</td>
+                <td>
+                    <form action="{{ path('cart_item_update_quantity', {id: item.product.id}) }}" method="post">
+                        <div class="input-group input-group-sm">
+                            <input type="number" class="form-control" value="{{ item.quantity }}" name="qt">
+                            <div class="div.input-group-append">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </td>
+
+                {% set totalProduct = item.product.price * item.quantity %}
+                <td>{{ totalProduct | number_format(2, ',', ' ') }}€</td>
+                <td><a href="{{ path('cart_item_delete', {'key' : key}) }}">Supprimer du panier</a> </td>
+            </tr>
+            {% set totalPanier = totalPanier + totalProduct %}
+{#               set - fait une variable et definit un valeur#}
+            {% endfor %}
+            <tr>
+                <td colspan="4">Total Panier</td>
+                <td>{{ totalPanier | number_format(2, ',', ' ') }}€</td>
+                <td><a href="{{ path('cart_delete') }}">Vider le panier</a></td>
+            </tr>
+
+            <tr>
+                <td colspan="6"><a href="{{ 'cart_checkout' }}">Confirmer le panier et passer au réglement</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock %}
